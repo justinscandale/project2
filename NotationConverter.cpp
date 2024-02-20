@@ -138,6 +138,8 @@ public:
             }
             else if (isVariable(c))
             {
+                if(postfixExpression.size()!=0)
+                {postfixExpression += " ";} // Add operands directly to the output
                 postfixExpression += c; // Add operands directly to the output
             }
             else if (c == '(')
@@ -149,6 +151,7 @@ public:
                 // Pop operators from the deque until '(' is encountered
                 while (!operators.empty() && operators.front() != '(')
                 {
+                    postfixExpression += " ";
                     postfixExpression += operators.front();
                     operators.popFront();
                 }
@@ -166,6 +169,7 @@ public:
                 // Pop operators from the deque while they have higher or equal precedence
                 while (!operators.empty() && precedence(operators.front()) >= precedence(c))
                 {
+                    postfixExpression += " ";
                     postfixExpression += operators.front();
                     operators.popFront();
                 }
@@ -184,6 +188,7 @@ public:
             {
                 return "invalid string"; // Unmatched '('
             }
+            postfixExpression += " ";
             postfixExpression += operators.front();
             operators.popFront();
         }
@@ -205,6 +210,7 @@ public:
             }
             else if (isVariable(c))
             {
+                prefixExpression += " ";
                 prefixExpression += c; // Add operands directly to the output
             }
             else if (c == ')')
@@ -216,6 +222,7 @@ public:
                 // Pop operators from the deque until ')' is encountered
                 while (!operators.empty() && operators.front() != ')')
                 {
+                    prefixExpression += " ";
                     prefixExpression += operators.front();
                     operators.popFront();
                 }
@@ -233,6 +240,7 @@ public:
                 // Pop operators from the deque while they have higher or equal precedence
                 while (!operators.empty() && precedence(operators.front()) > precedence(c))
                 {
+                    prefixExpression += " ";
                     prefixExpression += operators.front();
                     operators.popFront();
                 }
