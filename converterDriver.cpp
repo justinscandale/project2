@@ -21,32 +21,29 @@ int main()
 
   NotationConverter nc;
 
-  // nc.infixToPrefix(infix1);//should print "+ A B"
-  // nc.infixToPrefix(infix2);//should print "* + X B - Y D"
-  // nc.infixToPrefix(infix3);//should print "- / + A B + X Y R"
+  cout << nc.infixToPrefix(infix1) << endl; // should print "+ A B"
+  cout << nc.infixToPrefix(infix2) << endl; // should print "* + X B - Y D"
+  cout << nc.infixToPrefix(infix3) << endl; // should print "- / + A B + X Y R"
 
-  // nc.infixToPostfix(infix1);//should print "A B +"
-  // nc.infixToPostfix(infix2);//should print "X B + Y D - *"
-  // nc.infixToPostfix(infix3);//should print "A B + X Y + / R -"
+  cout << nc.infixToPostfix(infix1) << endl; // should print "A B +"
+  cout << nc.infixToPostfix(infix2) << endl; // should print "X B + Y D - *"
+  cout << nc.infixToPostfix(infix3) << endl; // should print "A B + X Y + / R -"
 
-  nc.prefixToPostfix(prefix1);//should print "x y * g / h +"
-  nc.prefixToPostfix(prefix2);//should print "x y / g -"
-  nc.prefixToPostfix(prefix3);//should print "x y / a b * -"
+  nc.prefixToPostfix(prefix1); // should print "x y * g / h +"
+  nc.prefixToPostfix(prefix2); // should print "x y / g -"
+  nc.prefixToPostfix(prefix3); // should print "x y / a b * -"
 
-  nc.prefixToInfix(prefix1);//should print "(((x * y) / g) + h)"
-  nc.prefixToInfix(prefix2);//should print "((x / y) - g)"
-  nc.prefixToInfix(prefix3);//should print "((x / y) - (a * b))"
+  nc.prefixToInfix(prefix1); // should print "(((x * y) / g) + h)"
+  nc.prefixToInfix(prefix2); // should print "((x / y) - g)"
+  nc.prefixToInfix(prefix3); // should print "((x / y) - (a * b))"
 
-  nc.postfixToInfix(postfix1);//should print "((X + Y) * (A + B))"
-  nc.postfixToInfix(postfix2);//should print "(V + C)"
-  nc.postfixToInfix(postfix3);//should print "((H * W) / (R - Q))"
+  nc.postfixToInfix(postfix1); // should print "((X + Y) * (A + B))"
+  nc.postfixToInfix(postfix2); // should print "(V + C)"
+  nc.postfixToInfix(postfix3); // should print "((H * W) / (R - Q))"
 
-  nc.postfixToPrefix(postfix1);//should print "* + X Y + A B"
-  nc.postfixToPrefix(postfix2);//should print "+ V C"
-  nc.postfixToPrefix(postfix3);//should print "/ * H W - R Q"
+  nc.postfixToPrefix(postfix1); // should print "* + X Y + A B"
+  nc.postfixToPrefix(postfix2); // should print "+ V C"
+  nc.postfixToPrefix(postfix3); // should print "/ * H W - R Q"
 
-
-return 0;
-
-
+  return 0;
 }
