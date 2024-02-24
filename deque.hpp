@@ -1,3 +1,6 @@
+//DEQUE CLASS FOR PROJECT 2
+//JUSIN SCANDALE & TSEGA AMANUEL
+
 #ifndef DEQUE_H
 #define DEQUE_H
 #include <iostream>

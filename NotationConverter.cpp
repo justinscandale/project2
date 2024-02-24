@@ -1,3 +1,7 @@
+//Notation Converter Class for Project 2
+//Holds methods for infix, prefix, postfix conversions
+//Justin Scandale & Tsega Amanuel
+
 #include "NotationConverter.hpp"
 #include <cctype>
 #include "deque.hpp"

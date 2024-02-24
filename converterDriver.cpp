@@ -1,4 +1,3 @@
-
 #include "NotationConverter.hpp"
 #include "NotationConverter.cpp"
 
@@ -21,13 +20,11 @@ int main()
 
   NotationConverter nc;
 
-  cout << nc.infixToPrefix(infix1) << endl; // should print "+ A B"
-  cout << nc.infixToPrefix(infix2) << endl; // should print "* + X B - Y D"
-  cout << nc.infixToPrefix(infix3) << endl; // should print "- / + A B + X Y R"
-
-  cout << nc.infixToPostfix(infix1) << endl; // should print "A B +"
-  cout << nc.infixToPostfix(infix2) << endl; // should print "X B + Y D - *"
-  cout << nc.infixToPostfix(infix3) << endl; // should print "A B + X Y + / R -"
+  nc.infixToPrefix(infix1) ; // should print "+ A B"
+  nc.infixToPrefix(infix2) ; // should print "* + X B - Y D"
+  nc.infixToPrefix(infix3) ; // should print "- / + A B +   nc.infixToPostfix(infixl; // should print "A B +"
+  nc.infixToPostfix(infix2) ; // should print "X B + Y D - *"
+  nc.infixToPostfix(infix3) ; // should print "A B + X Y + / R -"
 
   nc.prefixToPostfix(prefix1); // should print "x y * g / h +"
   nc.prefixToPostfix(prefix2); // should print "x y / g -"
