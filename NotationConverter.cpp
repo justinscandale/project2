@@ -1,6 +1,6 @@
-//Notation Converter Class for Project 2
-//Holds methods for infix, prefix, postfix conversions
-//Justin Scandale & Tsega Amanuel
+// Notation Converter Class for Project 2
+// Holds methods for infix, prefix, postfix conversions
+// Justin Scandale & Tsega Amanuel
 
 #include "NotationConverter.hpp"
 #include <cctype>
@@ -9,7 +9,10 @@
 class NotationConverter : public NotationConverterInterface
 {
 private:
-    int precedence(char c) const
+    // Determines which operation takes precedence and assigns a value so for example,
+    // if the operator is a '+' or '-', it will return 1, if it is a '*' or '/', it will return 2
+    // knowing this, we can determine which operator takes precedence
+    int orderOfOperations(char c) const
     {
         if (c == '+' || c == '-')
         {
@@ -152,57 +155,66 @@ public:
 
     std::string infixToPostfix(std::string inStr) override
     {
-        std::string postfixExpression = "";
+        std::string postfix = "";
         Deque<char> operators;
 
         for (char c : inStr)
         {
             if (isWhiteSpace(c))
             {
-                continue; // Skip whitespace
+                // Skip whitespace
+                continue;
             }
             else if (isVariable(c))
             {
-                if(postfixExpression.size()!=0)
-                {postfixExpression += " ";} // Add operands directly to the output
-                postfixExpression += c; // Add operands directly to the output
+                if (postfix.size() != 0)
+                {
+                    // Added space to output so it can appear the same as the test output cases
+                    postfix += " ";
+                }
+                // Add operands directly to the output
+                postfix += c;
             }
             else if (c == '(')
             {
-                operators.pushFront(c); // Push '(' onto the deque
+                // Push '(' onto the deque
+                operators.pushFront(c);
             }
             else if (c == ')')
             {
                 // Pop operators from the deque until '(' is encountered
                 while (!operators.empty() && operators.front() != '(')
                 {
-                    postfixExpression += " ";
-                    postfixExpression += operators.front();
+                    // Added space to output so it can appear the same as the test output cases
+                    postfix += " ";
+                    postfix += operators.front();
                     operators.popFront();
                 }
                 if (!operators.empty() && operators.front() == '(')
                 {
-                    operators.popFront(); // Discard '('
+                    operators.popFront();
                 }
                 else
                 {
-                    return "invalid string"; // Unmatched ')'
+                    // Unmatched infix expression
+                    return "invalid string";
                 }
             }
             else if (isOperator(c))
             {
                 // Pop operators from the deque while they have higher or equal precedence
-                while (!operators.empty() && precedence(operators.front()) >= precedence(c))
+                while (!operators.empty() && orderOfOperations(operators.front()) >= orderOfOperations(c))
                 {
-                    postfixExpression += " ";
-                    postfixExpression += operators.front();
+                    // Added space to output so it can appear the same as the test output cases
+                    postfix += " ";
+                    postfix += operators.front();
                     operators.popFront();
                 }
-                operators.pushFront(c); // Push the current operator onto the deque
+                operators.pushFront(c);
             }
             else
             {
-                return "invalid string"; // Invalid character
+                return "invalid string";
             }
         }
 
@@ -211,21 +223,23 @@ public:
         {
             if (operators.front() == '(')
             {
-                return "invalid string"; // Unmatched '('
+                return "invalid string";
             }
-            postfixExpression += " ";
-            postfixExpression += operators.front();
+            // Added space to output so it can appear the same as the test output cases
+            postfix += " ";
+            postfix += operators.front();
             operators.popFront();
         }
 
-        return postfixExpression;
+        return postfix;
     }
 
     std::string infixToPrefix(std::string inStr) override
     {
-        std::string prefixExpression = "";
+        std::string prefix = "";
         Deque<char> operators;
-        std::reverse(inStr.begin(), inStr.end()); // Reverse the input string to facilitate infix to prefix conversion
+        // Reverse the input string to make it easier to convert to prefix
+        std::reverse(inStr.begin(), inStr.end());
 
         for (char c : inStr)
         {
@@ -235,45 +249,52 @@ public:
             }
             else if (isVariable(c))
             {
-                prefixExpression += " ";
-                prefixExpression += c; // Add operands directly to the output
+                // Added space to output so it can appear the same as the test output cases
+                prefix += " ";
+                prefix += c;
             }
             else if (c == ')')
             {
-                operators.pushFront(c); // Push ')' onto the deque
+                // Push ')' onto the deque
+                operators.pushFront(c);
             }
             else if (c == '(')
             {
                 // Pop operators from the deque until ')' is encountered
                 while (!operators.empty() && operators.front() != ')')
                 {
-                    prefixExpression += " ";
-                    prefixExpression += operators.front();
+                    // Added space to output so it can appear the same as the test output cases
+                    prefix += " ";
+                    prefix += operators.front();
                     operators.popFront();
                 }
                 if (!operators.empty() && operators.front() == ')')
                 {
-                    operators.popFront(); // Discard ')'
+                    // Pop the ')' from the deque
+                    operators.popFront();
                 }
                 else
                 {
-                    return "invalid string"; // Unmatched '('
+                    return "invalid string";
                 }
             }
             else if (isOperator(c))
             {
                 // Pop operators from the deque while they have higher or equal precedence
-                while (!operators.empty() && precedence(operators.front()) > precedence(c))
+                while (!operators.empty() && orderOfOperations(operators.front()) > orderOfOperations(c))
                 {
-                    prefixExpression += " ";
-                    prefixExpression += operators.front();
+                    // Added space to output so it can appear the same as the test output cases
+                    prefix += " ";
+                    prefix += operators.front();
                     operators.popFront();
                 }
-                operators.pushFront(c); // Push the current operator onto the deque
+                // Push the current operator onto the deque
+                operators.pushFront(c);
             }
             else
             {
-                return "invalid string"; // Invalid character
+                // Invalid character
+                return "invalid string";
             }
         }
 
@@ -282,16 +303,17 @@ public:
         {
             if (operators.front() == ')')
             {
-                return "invalid string"; // Unmatched ')'
+                // Unmatched ')'
+                return "invalid string";
             }
-            prefixExpression += operators.front();
+            prefix += operators.front();
             operators.popFront();
         }
 
         // Reverse the prefix expression to get the correct order
-        std::reverse(prefixExpression.begin(), prefixExpression.end());
+        std::reverse(prefix.begin(), prefix.end());
 
-        return prefixExpression;
+        return prefix;
     }
 
     //method to convert prefix-> infix
