@@ -23,87 +23,104 @@ private:
     }
 
 public:
+    //checks if character is variable (alphabetic letter) returns boolean
     bool isVariable(const char chr) const
     {
         return std::isalpha(static_cast<unsigned char>(chr));
     }
 
+    //checks if character is whitespace (' ') returns boolean
     bool isWhiteSpace(const char chr) const
     {
         return std::isspace(static_cast<unsigned char>(chr));
     }
 
+    //checks if character is operator (+,-,/,*) returns boolean
     bool isOperator(const char chr) const
     {
         return chr == '+' || chr == '-' || chr == '/' || chr == '*';
     }
 
+    //method to convert postfix -> infix notation
     std::string postfixToInfix(std::string inStr) override
     {
         Deque<std::string> myDeque;
 
+        //iterate through each character in inStr
         for (char c : inStr)
         {
             if (isWhiteSpace(c))
             {
-            } // do nothing if whitespace
+                // do nothing if whitespace
+            } 
             else if (isVariable(c))
             {
-                myDeque.pushFront(std::string(1, c));
-            } // put varibale onto front of deque
+                myDeque.pushFront(std::string(1, c)); // put varibale onto front of deque
+            } 
             else if (isOperator(c))
             {
+                //check if deque contains enough elements to perform operations on
                 if (myDeque.getSize() < 2)
                 {
-                    return "invalid string";
-                } // invalid operator
+                    return "invalid string"; //invalid operator
+                } 
 
+                //peform notation conversion
                 else
-                {
+                {   
                     std::string variable1 = myDeque.front();
                     myDeque.popFront();
                     std::string variable2 = myDeque.front();
                     myDeque.popFront();
 
+                    //result = first two elements on deque with operator C between them
                     std::string result = '(' + variable2 + ' ' + c + ' ' + variable1 + ')';
+                    //push result string back onto front of deque
                     myDeque.pushFront(result);
                 }
             }
-            // invalid character
+            //if character is invalid 
             else
             {
                 return "invalid string";
             }
         }
-
+        
+        //check if deque has more than one element on it after all operations 
         if (myDeque.getSize() != 1)
         {
-            return "invalid string";
-        } // return if expression was invalid
+            return "invalid string"; // return if expression was invalid
+        } 
+        //return front of deque/ completed conversion
         return myDeque.front();
     }
 
+    //method to convert postfix -> prefix notation
     std::string postfixToPrefix(std::string inStr) override
     {
 
         Deque<std::string> myDeque;
 
+        //iterate through each character in inStr
         for (char c : inStr)
         {
             if (isWhiteSpace(c))
             {
-            } // do nothing if whitespace
+                // do nothing if whitespace
+            } 
             else if (isVariable(c))
             {
-                myDeque.pushFront(std::string(1, c));
-            } // put varibale onto front of deque
+                myDeque.pushFront(std::string(1, c)); // put varibale onto front of deque
+            } 
             else if (isOperator(c))
             {
+                //check if deque contains enough elements to perform operations on
                 if (myDeque.getSize() < 2)
                 {
-                    return "invalid string";
-                } // invalid operator
+                    return "invalid string"; // invalid operator
+                } 
 
+                //perform notation conversion
                 else
                 {
                     std::string variable1 = myDeque.front();
@@ -111,21 +128,25 @@ public:
                     std::string variable2 = myDeque.front();
                     myDeque.popFront();
 
+                    //result = first two elements on deque with oeprator C between them
                     std::string result = std::string(1, c) + ' ' + variable2 + ' ' + variable1;
+                    //push result string back onto front of deque
                     myDeque.pushFront(result);
                 }
             }
-            // invalid character
+            //if character is invalid
             else
             {
                 return "invalid string";
             }
         }
 
+        //check if deque has more than one element on it after all operations 
         if (myDeque.getSize() != 1)
         {
-            return "invalid string";
-        } // return if expression was invalid
+            return "invalid string"; // return if expression was invalid
+        } 
+        //return front of deque/ completed conversion
         return myDeque.front();
     }
 
@@ -273,72 +294,86 @@ public:
         return prefixExpression;
     }
 
+    //method to convert prefix-> infix
     std::string prefixToInfix(std::string inStr) override
     {
 
         Deque<std::string> myDeque;
 
+        //iterate through each character in reverse order
         for (int i = inStr.size() - 1; i >= 0; i--)
         {
             if (isWhiteSpace(inStr[i]))
             {
-            } // do nothing if whitespace
+                // do nothing if whitespace
+            } 
             else if (isVariable(inStr[i]))
             {
-                myDeque.pushFront(std::string(1, inStr[i]));
-            } // put varibale onto front of deque
+                myDeque.pushFront(std::string(1, inStr[i])); // put varibale onto front of deque
+            } 
             else if (isOperator(inStr[i]))
             {
+                //check if deque contains enough elements to perform oeprations on
                 if (myDeque.getSize() < 2)
                 {
-                    return "invalid string";
-                } // invalid operator
+                    return "invalid string"; // invalid operator
+                } 
 
+                //perform notation conversion
                 else
                 {
                     std::string variable1 = myDeque.front();
                     myDeque.popFront();
                     std::string variable2 = myDeque.front();
                     myDeque.popFront();
-
+                    
+                    //result = first two variablaes on deque with current operator 
                     std::string result = '(' + variable1 + ' ' + inStr[i] + ' ' + variable2 + ')';
                     myDeque.pushFront(result);
                 }
             }
-            // invalid character
+            //if character is invalid 
             else
             {
                 return "invalid string";
             }
         }
+
+        //check if deque has more than one element on it after all operations
         if (myDeque.getSize() != 1)
         {
-            return "invalid string";
-        } // return if expression was invalid
+            return "invalid string"; // return if expression was invalid
+        } 
+        //return front of deque/ completed conversion
         return myDeque.front();
     }
 
+    //method to convert prefix -> postfix 
     std::string prefixToPostfix(std::string inStr) override
     {
 
         Deque<std::string> myDeque;
 
+        //iterate through each character in reverse order
         for (int i = inStr.size() - 1; i >= 0; i--)
         {
             if (isWhiteSpace(inStr[i]))
             {
-            } // do nothing if whitespace
+                // do nothing if whitespace
+            } 
             else if (isVariable(inStr[i]))
             {
-                myDeque.pushFront(std::string(1, inStr[i]));
-            } // put varibale onto front of deque
+                myDeque.pushFront(std::string(1, inStr[i])); // put varibale onto front of deque
+            } 
             else if (isOperator(inStr[i]))
             {
+                //check if deque contains enough elements to perform oeprations on
                 if (myDeque.getSize() < 2)
                 {
-                    return "invalid string";
-                } // invalid operator
+                    return "invalid string"; // invalid operator
+                } 
 
+                //perform notation conversion
                 else
                 {
                     std::string variable1 = myDeque.front();
@@ -346,20 +381,24 @@ public:
                     std::string variable2 = myDeque.front();
                     myDeque.popFront();
 
+                    //result = first two variables on deque with current operator
                     std::string result = variable1 + ' ' + variable2 + ' ' + inStr[i];
                     myDeque.pushFront(result);
                 }
             }
-            // invalid character
+            //if character is invalid 
             else
             {
                 return "invalid string";
             }
         }
+
+        //check if deque has more than one element on it after all operations
         if (myDeque.getSize() != 1)
         {
-            return "invalid string";
-        } // return if expression was invalid
+            return "invalid string"; // return if expression was invalid
+        } 
+        //return front of deque/ completed conversion
         return myDeque.front();
     }
 };
